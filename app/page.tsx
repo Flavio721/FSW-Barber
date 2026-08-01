@@ -6,8 +6,15 @@ import Image from "next/image";
 import { Card, CardContent } from "./_components/ui/card";
 import { Badge } from "./_components/ui/badge";
 import { Avatar, AvatarImage } from "./_components/ui/avatar";
+import { db } from "./_lib/prisma";
+import BarbershopItem from "./_components/BarbershopItem";
 
-const Home = () => {
+const Home = async () => {
+    const barbershops = await db.barberShop.findMany({});
+    const popularBarbershops = await db.barberShop.findMany({
+      orderBy: { name: 'desc'}
+    });
+
   return(
     <div>
       <Header />
@@ -48,7 +55,7 @@ const Home = () => {
 
         {/* AGENDAMENTOS */}
         <div className="mt-6">
-          <h2 className="text-xl font-bold text-[#838896] line-clamp-3 ">AGENDAMENTOS</h2>
+          <h2 className="text-sm font-semibold text-[#838896] line-clamp-3 ">AGENDAMENTOS</h2>
           <Card className="mt-2">
             <CardContent className="flex justify-between">
                 {/* ESQUERDA */}
@@ -71,6 +78,18 @@ const Home = () => {
                 </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* RECOMENDADOS */}
+        <h2 className="text-sm font-semibold text-[#838896] line-clamp-3 mt-3 mb-2">RECOMENDADOS</h2>
+        <div className="flex gap-2 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          {barbershops.map(barbershop => <BarbershopItem key={barbershop.id} barbershop={barbershop}/>)}
+        </div>
+        
+        {/* POPULARES */}
+        <h2 className="text-sm font-semibold text-[#838896] line-clamp-3 mt-3 mb-2">POPULARES</h2>
+        <div className="flex gap-2 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          {popularBarbershops.map(barbershop => <BarbershopItem key={barbershop.id} barbershop={barbershop}/>)}
         </div>
       </div>
     </div>
