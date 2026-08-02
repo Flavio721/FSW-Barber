@@ -1,7 +1,17 @@
+import { Card, CardContent } from "./ui/card"
+
 const Footer = () => {
-    return  <div className="bg-[#1A1B1F] h-20 py-6 px-5">
-        <h3 className="text-gray-500">© 2026 Copyright <span className="font-bold">FSW Barber</span></h3>
-    </div>;
+  return (
+    <footer>
+      <Card>
+        <CardContent className="px-5 py-6">
+          <p className="text-sm text-gray-400">
+            © 2026 Copyright <span className="font-bold">FSW Barber - Flávio Inocêncio</span>
+          </p>
+        </CardContent>
+      </Card>
+    </footer>
+  )
 }
- 
-export default Footer;
+
+export default Footer
